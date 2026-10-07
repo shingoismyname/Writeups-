@@ -1,10 +1,9 @@
-Flag Hunters
-Đây là 1 bài mức độ easy.
-Đề bài như sau:
-Lyrics jump from verses to the refrain kind of like a subroutine call. There is a hidden refrain this program doesn not print by default. Can you get it to print it? There might be something in it for you.
-
-The program`s source code can be downloaded here(https://challenge-files.cylabacademy.net/library/f80370282cd4baf0ad8e8ed41402ccddb55aea0038d174673324709755639912/lyric-reader.py)
-Giải
+# Flag Hunters
+- Đây là 1 bài mức độ easy.
+**Đề bài như sau:**
+- Lyrics jump from verses to the refrain kind of like a subroutine call. There is a hidden refrain this program doesn not print by default. Can you get it to print it? There might be something in it for you.<br>
+The program`s source code can be downloaded [here](https://challenge-files.cylabacademy.net/library/f80370282cd4baf0ad8e8ed41402ccddb55aea0038d174673324709755639912/lyric-reader.py)<br>
+## Giải
 - Sau khi tải về tôi thấy đây là 1 file python, dùng vs code để mở ra:
 ```python
 import re
@@ -142,8 +141,8 @@ reader(song_flag_hunters, '[VERSE1]')
 
 ```
 - Nhận thấy đây có vẻ như là 1 chương trình in ra 1 đoạn nhạc theo 1 trật tự nào đó, tôi đã đọc và đây là cách chương trình hoạt động:
-Bài hát này gồm Intro (là đoạn chứa flag), điệp khúc, và khổ 1
-Khi chạy, nó sẽ bắt đầu in từ đoạn bắt đầu là [Verse 1], sau đó tiếp tục và cứ mỗi lần chuyển đoạn (gặp chữ "REFRAIN" thì nó lại nhảy đến đoạn [REFRAIN] để in) sau đó quay lại---> Lặp lại cho đến hết bài
+- Bài hát này gồm Intro (là đoạn chứa flag), điệp khúc, và khổ 1
+- Khi chạy, nó sẽ bắt đầu in từ đoạn bắt đầu là [Verse 1], sau đó tiếp tục và cứ mỗi lần chuyển đoạn (gặp chữ "REFRAIN" thì nó lại nhảy đến đoạn [REFRAIN] để in) sau đó quay lại---> Lặp lại cho đến hết bài.<br>
 Tôi cũng để ý thấy ở đoạn [REFRAIN] này có yêu cầu input từ người dùng: 
 ```python
 if line == 'REFRAIN':
@@ -160,26 +159,26 @@ elif re.match(r"RETURN [0-9]+", line):
         lip = int(line.split()[1])
 ```
 
-Ở đây, biến lip chính là số thứ tự (vị trí) của dòng mà chương trình in ra, nó luôn được thay đổi suốt quá trình chạy.
-Với dòng elif này thực chất là: 'Nếu gặp dòng có từ RETURN + 1 số thì nhảy đến dòng có thứ tự đó để in nhé'
-Từ đây chúng ta hoàn toàn có thể nghĩ đến việc từ input của người dùng, làm sao đó để nhập 1 dòng dạng RETURN + 1 số (dòng chứa flag) để chương trình thực thi.
+- Ở đây, biến lip chính là số thứ tự (vị trí) của dòng mà chương trình in ra, nó luôn được thay đổi suốt quá trình chạy.
+Với dòng elif này thực chất là: 'Nếu gặp dòng có từ RETURN + 1 số thì nhảy đến dòng có thứ tự đó để in nhé' <br>
+Từ đây chúng ta hoàn toàn có thể nghĩ đến việc từ input của người dùng, làm sao đó để nhập 1 dòng dạng RETURN + 1 số (dòng chứa flag) để chương trình thực thi.<br>
 Nhưng có 1 vấn đề:
 ```python
 re.match(r"RETURN [0-9]+", line)
 ```
-Hàm match() chỉ hoặc động nếu đoạn "RETURN + 1 số" nằm ở 'ĐẦU DÒNG', trong khi input của chúng ta đứng sau từ 'Crowd':
+- Hàm match() chỉ hoặc động nếu đoạn "RETURN + 1 số" nằm ở 'ĐẦU DÒNG', trong khi input của chúng ta đứng sau từ 'Crowd':
 ```python
 crowd = input('Crowd: ')
 song_lines[lip] = 'Crowd: ' + crowd
 ```
 - Đến đây thì không biết làm gì do đó ta sẽ xem xét kĩ đoạn code hơn nhé:
-'''python
+```python
 for line in song_lines[lip].split(';'):
-'''
-Nhìn lại dòng for này ta thấy chương trình tách dòng nếu nó được ngăn cách với nhau bởi ';', và đây cũng là mấu chốt của bài này.
-Do đó nếu input của ta có dạng: ;RETURN 1
-Thì chương trình sẽ coi RETURN 1 này là 1 dòng mới, và hàm 'match' sẽ thực thi từ đó nhảy đến dòng 1.
-Lấy flag:
-OK, Giờ thấy launch instance và ghi input vào thôi. Đợi 1 xíu ta sẽ ra được flag (tự tìm đi nhé ^^ )
+```
+- Nhìn lại dòng for này ta thấy chương trình tách dòng nếu nó được ngăn cách với nhau bởi ';', và đây cũng là mấu chốt của bài này.<br>
+Do đó nếu input của ta có dạng: ;RETURN 1 <br>
+Thì chương trình sẽ coi RETURN 1 này là 1 dòng mới, và hàm 'match' sẽ thực thi từ đó nhảy đến dòng 1.<br>
+## Lấy flag: 
+- OK, Giờ thấy launch instance và ghi input vào thôi. Đợi 1 xíu ta sẽ ra được flag (tự tìm đi nhé ^^ ) <br>
 <Lưu ý: ở đây ta có thể RETURN luôn vào dòng chứa flag, hoặc các dòng phía trên vì nó vẫn sẽ tự in tiếp đến dòng chứa flag>
 
